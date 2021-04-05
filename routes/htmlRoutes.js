@@ -1,3 +1,4 @@
+
 //use paths to get to files
 
 const path = require("path");
@@ -25,5 +26,11 @@ res.sendFile(path.join(__dirname, "../public/stats.html"));
 }
 
 
+
+=======
+// html route to exercise type
+
+
+//html route to main page
 
 
