@@ -14,7 +14,7 @@ res.sendFile(path.join(__dirname, "../public/exercise.html"));
 //route to index page
 app.get("/", function (req, res)
 {
-res.sendFile(path.joing(__dirname, "../public/index.html"));
+res.sendFile(path.join(__dirname, "../public/index.html"));
 
 });
 
@@ -27,7 +27,6 @@ res.sendFile(path.join(__dirname, "../public/stats.html"));
 
 
 
-=======
 // html route to exercise type
 
 
