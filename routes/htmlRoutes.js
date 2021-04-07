@@ -27,7 +27,6 @@ res.sendFile(path.join(__dirname, "../public/stats.html"));
 
 
 
-=======
 // html route to exercise type
 
 
