@@ -57,7 +57,7 @@ router.post("/api/workouts/range", function (req, res) {
 
 //attach to an id in database using body parameters
 router.put("/api/workouts/:id", (req, res) => {
-db.Workout.findOneandUpdate(
+db.Workout.insert(
     { _id: req.params.id},
     {$push:{exercises:req.body}},
 )
@@ -85,4 +85,4 @@ db.Workout.findOneandUpdate(
 
 //api route to find and update a workout (resume in progress workout)
 
-module.export = router;
+module.exports = router;
