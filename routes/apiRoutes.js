@@ -85,3 +85,4 @@ db.Workout.findOneandUpdate(
 
 //api route to find and update a workout (resume in progress workout)
 
+module.export = router;
