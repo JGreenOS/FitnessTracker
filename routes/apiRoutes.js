@@ -1,6 +1,7 @@
 
 //make Class named Workout and require the modules for models
-const Workout = require("..models/workout.js")
+const { Db } = require("mongodb");
+const db = require("../models");
 
 //set up app API routes
 module.exports = function (app) {
@@ -8,16 +9,16 @@ module.exports = function (app) {
     //get api data on workouts
 
     //find workout
-app.get("/api/workouts", function (req, res) {
+app.get("/api/workout", function (req, res) {
 Workout.find()
-.then(data => {res.json(data)})
+.then(workout => {res.json(workout)})
 .catch(err => {res.json(err)});
 });
 
 
 //update workout
 app.post("api/workouts", function (req, res) {
-Workout.create( {} )
+Workout.create({})
 .then(data => res.json(data))
 .catch(err => {res.json(err)})
 });
@@ -36,7 +37,7 @@ app.get("/api/workouts/range", function (req, res) {
 //range of workouts - update
 app.post("/api/workouts/range", function (req, res) {
 
-    Workout.create ({})    
+    Db.create ({})    
     .then(data => {
         res.json(data)
     })
@@ -48,11 +49,11 @@ app.post("/api/workouts/range", function (req, res) {
 
 //attach to an id in database using body parameters
 app.put("/api/workouts/:id", ({body, params}, res) =>
-Workout.findByIDandUpdate(
+db.workout.(
     params.id,
     {$push:{exercises:body}},
 )
-.then(data => res.json(data))
+.then(workout => res.json(workout))
 .catch(err => {res.json(err)})
 );
 
