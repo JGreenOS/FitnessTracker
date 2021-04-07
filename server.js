@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 
 //use express
 const app = express();
-const PORT = process.env.PORT || 8080;
+// const PORT = process.env.PORT || 3000;
 
 
 
@@ -20,8 +20,8 @@ app.use(express.static('public'));
 let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/fitnesstracker";
 mongoose.connect(MONGODB_URI, {useNewUrlParser: true, useFindAndModify: false})
 //define routes call for api and html routes
-require("./routes/apiRoutes.js")(app);
-require("./routes/htmlRoutes.js")(app);
+app.use(require("./routes/apiRoutes"));
+app.use(require("./routes/htmlRoutes"));
 //listen for port 
 
 app.listen(PORT, function(){

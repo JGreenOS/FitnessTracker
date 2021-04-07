@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 //workout schema here
 
-const workoutSchema = new Schema(
+const WorkoutSchema = new Schema(
     {
 //day  - use date default
 day: {
@@ -62,7 +62,7 @@ exercises: [{
     //sum of workouts that have weights
     //make the workout Class from model and schema
 
-const Workout = mongoose.model("workout", workoutSchema);
+const Workout = mongoose.model("Workout", WorkoutSchema);
 
     //export the function 
 module.exports = Workout;    

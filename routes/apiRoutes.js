@@ -1,7 +1,6 @@
 
 //make Class named Workout and require the modules for models
 const db = require("../models");
-const Workout = require("../models/workout");
 const router = require("express").Router();
 
 //set up app API routes
