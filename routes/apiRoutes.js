@@ -17,24 +17,24 @@ db.Workout.find({})
 })
 
 //add new workout
-router.post("api/workouts", ({body}, res) => {
-    Workout.create(body)
+router.post("/api/workouts", ({body}, res) => {
+    db.Workout.create(body)
     .then((dbWorkout) => { res.json(dbWorkout)})
     .catch((err) => {res.status(400).json(err)})
 })
 
 //update workout
-router.post("api/workouts", (req, res) => {
+/*router.post("api/workouts", (req, res) => {
 db.Workout.create({})
 .then((dbworkout) => {res.json(dbworkout);})
 .catch((err) => {res.status(400).json(err);
 });
-})
+})*/
 
 //range of workouts - find
 router.get("/api/workouts/range", function (req, res) {
 
-    Workout.find()
+    db.Workout.find()
     .then(data => {
         res.json(data)
     })
@@ -45,7 +45,7 @@ router.get("/api/workouts/range", function (req, res) {
 //range of workouts - update
 router.post("/api/workouts/range", function (req, res) {
 
-    Db.create ({})    
+    db.Workout.create ({})    
     .then(data => {
         res.json(data)
     })
@@ -57,7 +57,7 @@ router.post("/api/workouts/range", function (req, res) {
 
 //attach to an id in database using body parameters
 router.put("/api/workouts/:id", (req, res) => {
-db.Workout.insert(
+db.Workout.findByIdAndUpdate(
     { _id: req.params.id},
     {$push:{exercises:req.body}},
 )
