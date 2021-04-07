@@ -1,30 +1,39 @@
 
 //make Class named Workout and require the modules for models
-const { Db } = require("mongodb");
 const db = require("../models");
+const Workout = require("../models/workout");
+const router = require("express").Router();
 
 //set up app API routes
-module.exports = function (app) {
+//module.exports = function (app) {
 
     //get api data on workouts
 
     //find workout
-app.get("/api/workout", function (req, res) {
-Workout.find()
-.then(workout => {res.json(workout)})
-.catch(err => {res.json(err)});
+router.get("/api/workouts", (req, res) => {
+db.Workout.find({})
+.then((dbworkout) => {res.json(dbworkout);})
+.catch((err) => {res.status(400).json(err);
 });
+})
 
+//add new workout
+router.post("api/workouts", ({body}, res) => {
+    Workout.create(body)
+    .then((dbWorkout) => { res.json(dbWorkout)})
+    .catch((err) => {res.status(400).json(err)})
+})
 
 //update workout
-app.post("api/workouts", function (req, res) {
-Workout.create({})
-.then(data => res.json(data))
-.catch(err => {res.json(err)})
+router.post("api/workouts", (req, res) => {
+db.Workout.create({})
+.then((dbworkout) => {res.json(dbworkout);})
+.catch((err) => {res.status(400).json(err);
 });
+})
 
 //range of workouts - find
-app.get("/api/workouts/range", function (req, res) {
+router.get("/api/workouts/range", function (req, res) {
 
     Workout.find()
     .then(data => {
@@ -33,9 +42,9 @@ app.get("/api/workouts/range", function (req, res) {
     .catch(err => {
         res.json(err)
     })
-});
+})
 //range of workouts - update
-app.post("/api/workouts/range", function (req, res) {
+router.post("/api/workouts/range", function (req, res) {
 
     Db.create ({})    
     .then(data => {
@@ -44,20 +53,21 @@ app.post("/api/workouts/range", function (req, res) {
     .catch(err => {
         res.json(err)
     })
-});
+})
 
 
 //attach to an id in database using body parameters
-app.put("/api/workouts/:id", ({body, params}, res) =>
-db.workout.(
-    params.id,
-    {$push:{exercises:body}},
+router.put("/api/workouts/:id", (req, res) => {
+db.Workout.findOneandUpdate(
+    { _id: req.params.id},
+    {$push:{exercises:req.body}},
 )
 .then(workout => res.json(workout))
-.catch(err => {res.json(err)})
-);
+.catch(err => {res.json(err);
+});
 
-}
+
+})
 
 //need api route for get workout
 
@@ -75,6 +85,4 @@ db.workout.(
 
 
 //api route to find and update a workout (resume in progress workout)
-
-
 
