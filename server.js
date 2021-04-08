@@ -2,12 +2,10 @@
 const express = require('express');
 const mongoose = require('mongoose')
 
-
+require('./seeders/seed');
 //use express
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-
 
 //use port env variable
 

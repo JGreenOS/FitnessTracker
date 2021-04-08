@@ -31,7 +31,7 @@ exercises: [{
         trim: true,
         required: "Exercise type"
     },
-    time:{
+    duration:{
         type: Number,
         required: "Exercise time in minutes"
     },

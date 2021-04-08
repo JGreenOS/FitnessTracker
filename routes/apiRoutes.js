@@ -3,12 +3,18 @@
 const db = require("../models");
 const router = require("express").Router();
 
-//set up app API routes
-//module.exports = function (app) {
+//get api data on workouts
+router.get("/api/workouts", (req, res) => {
+    db.Workout.aggregate([
+        { $addFields: {totalDuration: { $sum: '$exercises.duration' } } }
+    ])
+    .sort( {date: -1} )
+    .then (dbWorkout => {res.json(dbWorkout) })
+    .catch((err) => {res.json(err)});
+})
 
-    //get api data on workouts
 
-    //find workout
+//find workout
 router.get("/api/workouts", (req, res) => {
 db.Workout.find({})
 .then((dbworkout) => {res.json(dbworkout);})
@@ -23,17 +29,9 @@ router.post("/api/workouts", ({body}, res) => {
     .catch((err) => {res.status(400).json(err)})
 })
 
-//update workout
-/*router.post("api/workouts", (req, res) => {
-db.Workout.create({})
-.then((dbworkout) => {res.json(dbworkout);})
-.catch((err) => {res.status(400).json(err);
-});
-})*/
 
 //range of workouts - find
 router.get("/api/workouts/range", function (req, res) {
-
     db.Workout.find()
     .then(data => {
         res.json(data)
@@ -42,9 +40,9 @@ router.get("/api/workouts/range", function (req, res) {
         res.json(err)
     })
 })
+
 //range of workouts - update
 router.post("/api/workouts/range", function (req, res) {
-
     db.Workout.create ({})    
     .then(data => {
         res.json(data)
@@ -64,8 +62,6 @@ db.Workout.findByIdAndUpdate(
 .then(workout => res.json(workout))
 .catch(err => {res.json(err);
 });
-
-
 })
 
 //need api route for get workout
@@ -79,10 +75,21 @@ db.Workout.findByIdAndUpdate(
 
 
 
-//api route to post range of workouts
-
-
-
+//api route to post range of workouts with last 7 days
+router.get("/api/workouts/range", (req, res) => {
+    db.Workout.aggregate([{
+      $addFields: {
+        totalDuration: { $sum: "$exercises.duration" } }
+    }])
+    .limit(7)
+    .sort({ _id: -1})
+    .then((dbWorkout) => {
+      res.json(dbWorkout);
+    })
+    .catch((err) => {
+        res.status(400).json(err);})
+    
+    })
 //api route to find and update a workout (resume in progress workout)
 
 module.exports = router;
